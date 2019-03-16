@@ -19,5 +19,7 @@ while continuer:
         if event.type == pygame.QUIT:
             continuer = False
     
+    screen.fill(BLEU_CIEL)
+    pygame.display.flip()
 
 pygame.quit()
