@@ -19,7 +19,13 @@ while continuer:
         if event.type == pygame.QUIT:
             continuer = False
     
+    # Fond provisoire
     screen.fill(BLEU_CIEL)
+    pygame.draw.line(screen, ROUGE,(0,380),(700,380),10)
     pygame.display.flip()
+    # sol
+    
+    
+
 
 pygame.quit()
