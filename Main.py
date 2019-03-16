@@ -1,4 +1,5 @@
 import pygame
+from math import pi
 # pygame.display.set_caption("Nom de la fenetre")
 # logo = pygame.image.load("logo.png").convert()
 # pygame.display.set_icon(logo)
@@ -22,6 +23,14 @@ while continuer:
     # Fond provisoire
     screen.fill(BLEU_CIEL)
     # sol
+    pygame.draw.line(screen, ROUGE,(0, 380),(700, 380),10)
+    # rectangle
+    pygame.draw.rect(screen, VERT, pygame.Rect(200, 330, 50, 45))
+    # arc de cerle pour compteur de vies
+    for angle, color in zip((0, pi),(ROUGE, VERT)):
+        pygame.draw.arc(screen, color, pygame.Rect(620, 10, 70,70), angle, angle + pi, 5)
+    pygame.display.flip()
+  
     
     
 
