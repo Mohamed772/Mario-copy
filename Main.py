@@ -21,8 +21,6 @@ while continuer:
     
     # Fond provisoire
     screen.fill(BLEU_CIEL)
-    pygame.draw.line(screen, ROUGE,(0,380),(700,380),10)
-    pygame.display.flip()
     # sol
     
     
