@@ -1,5 +1,8 @@
-import pygame
+import sys
 from math import pi
+
+import pygame
+
 # pygame.display.set_caption("Nom de la fenetre")
 # logo = pygame.image.load("logo.png").convert()
 # pygame.display.set_icon(logo)
@@ -12,6 +15,7 @@ class Player(pygame.sprite.Sprite):
      self.image = pygame.image.load("redball.png").convert_alpha()
      self.rect = self.image.get_rect(center=(x, y)) 
      self.y_change = 0 
+     self.x_change = 0
 
 pygame.init()
 GRAVITY = 0.9
@@ -40,35 +44,28 @@ continuer = True
 deplacement_left = False
 deplacement_right = False
 
+
 while continuer:
     for event in pygame.event.get(): # regler le probleme de deplacement gauche droite
+        keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
             continuer = False
-        keys = pygame.key.get_pressed()
+        if keys[pygame.K_RIGHT]:
+            deplacement_right = True
+        if keys[pygame.K_LEFT]:
+            deplacement_left = True
         if keys[pygame.K_UP]:
             move = True
-        """if event.type == pygame.KEYDOWN: 
-            if event.key == K_UP
-                move = True 
-            if event.key == K_RIGHT:
-                deplacement_right = True
-            if event.key == K_LEFT:
-                deplacement_left = True
-         if event.type == pygame.KEYUP: 
-            if event.key == K_UP
-                move = False
-            if event.key == K_RIGHT:
-                deplacement_right = False
-            if event.key == K_LEFT:
-                deplacement_left = False"""
 
     if deplacement_left:
         player.x_change -=1
         player.rect.move_ip(player.x_change, 0)
+        deplacement_left = False
     if deplacement_right:
         player.x_change +=1
         player.rect.move_ip(player.x_change, 0)
-    if move: # Fly upwards. 
+        deplacement_right = False
+    if move: # Sauter
      player.y_change = -9
     else:
      player.y_change += GRAVITY
