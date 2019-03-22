@@ -20,7 +20,6 @@ personnage = pygame.image.load("redball.png").convert_alpha()
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
 # Vie
-Vie = 3
 text_surface = comic_font.render("Vie: {}".format(Vie), True, BLANC)
 
 
