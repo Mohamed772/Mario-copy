@@ -1,6 +1,6 @@
 import sys
 from math import pi
-
+from pygame.locals import *
 import pygame
 
 # pygame.display.set_caption("Nom de la fenetre")
