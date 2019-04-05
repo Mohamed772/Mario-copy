@@ -2,28 +2,19 @@ import sys
 from math import pi
 from pygame.locals import *
 import pygame
+from perso import *
 
 # pygame.display.set_caption("Nom de la fenetre")
 # logo = pygame.image.load("logo.png").convert()
 # pygame.display.set_icon(logo)
 
-# Personnages
-class Player(pygame.sprite.Sprite): 
 
-    def __init__(self, x, y): 
-     super(Player, self).__init__() 
-     self.image = pygame.image.load("redball.png").convert_alpha()
-     self.rect = self.image.get_rect(center=(x, y)) 
-     self.y_change = 0 
-     self.x_change = 0
 
 pygame.init()
 GRAVITY = 0.9
 screen_width=700
 screen_height=400
 screen=pygame.display.set_mode([screen_width,screen_height])
-player = Player(200, 100) 
-all_sprites_list = pygame.sprite.Group(player) 
 clock = pygame.time.Clock() 
 player_vitesse = 0
 
@@ -32,6 +23,11 @@ BLEU_CIEL = (185, 240, 240)
 ROUGE = (255, 0, 0)
 VERT = (0, 255, 0)
 
+# Personnages
+player_surface= pygame.image.load("left1.png").convert_alpha()
+player_rect = player_surface.get_rect(center=(200, 100)) 
+player_y_change = 0 
+walkcount = 0
 
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
@@ -44,7 +40,7 @@ continuer = True
 deplacement_left = False
 deplacement_right = False
 
-
+pygame.key.set_repeat(1,20)
 while continuer:
     for event in pygame.event.get(): # regler le probleme de deplacement gauche droite
         keys = pygame.key.get_pressed()
@@ -58,25 +54,28 @@ while continuer:
             move = True
 
     if deplacement_left:
-        player.x_change -=1
-        player.rect.move_ip(player.x_change, 0)
+        player_rect.left -= 3
+        for i in range(len(player_left)):
+            player_surface = player_left(i)
+            if walkcount == 2:
+                walkcount = 0
+        walkcount += 1
         deplacement_left = False
     if deplacement_right:
-        player.x_change +=1
-        player.rect.move_ip(player.x_change, 0)
+        player_rect.left += 3
         deplacement_right = False
     if move: # Sauter
-     player.y_change = -9
+     player_y_change = -9
     else:
-     player.y_change += GRAVITY
-    player.rect.move_ip(0, player.y_change)
+     player_y_change += GRAVITY
+    player_rect.move_ip(0, player_y_change)
     move = False
-    if player.rect.y < 10: 
-     player.rect.y = 10 
-     player.y_change = 0 
-    elif player.rect.bottom >= screen_height-20: 
-     player.rect.bottom = screen_height-20 
-     player.y_change = 0 
+    if player_rect.y < 10: 
+     player_rect.y = 10 
+     player_y_change = 0 
+    elif player_rect.bottom >= screen_height-20: 
+     player_rect.bottom = screen_height-20 
+     player_y_change = 0 
 
     # Fond provisoire
     screen.fill(BLEU_CIEL)
@@ -95,7 +94,7 @@ while continuer:
     
     # affichage 
     pygame.display.flip() 
-    all_sprites_list.draw(screen) 
+    screen.blit(player_surface, player_rect)
     pygame.display.flip() 
     pygame.display.update() 
     clock.tick(30) 
