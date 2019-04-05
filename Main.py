@@ -2,7 +2,7 @@ import sys
 from math import pi
 from pygame.locals import *
 import pygame
-from perso import *
+#from perso import *
 
 # pygame.display.set_caption("Nom de la fenetre")
 # logo = pygame.image.load("logo.png").convert()
@@ -24,11 +24,10 @@ ROUGE = (255, 0, 0)
 VERT = (0, 255, 0)
 
 # Personnages
-player_surface= pygame.image.load("left1.png").convert_alpha()
+player_surface = pygame.image.load("left1.png").convert_alpha()
 player_rect = player_surface.get_rect(center=(200, 100)) 
 player_y_change = 0 
-walkcount = 0
-
+player_left = [pygame.image.load("left1.png"),pygame.image.load("left2.png"),pygame.image.load("left3.png"),pygame.image.load("left4.png"),pygame.image.load("left5.png")]
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
 # Vie
@@ -42,6 +41,7 @@ deplacement_right = False
 
 pygame.key.set_repeat(1,20)
 while continuer:
+    clock.tick(20) 
     for event in pygame.event.get(): # regler le probleme de deplacement gauche droite
         keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
@@ -56,10 +56,9 @@ while continuer:
     if deplacement_left:
         player_rect.left -= 3
         for i in range(len(player_left)):
-            player_surface = player_left(i)
-            if walkcount == 2:
-                walkcount = 0
-        walkcount += 1
+            player_surface = player_left[i]
+            if i == len(player_left):
+                i = 0
         deplacement_left = False
     if deplacement_right:
         player_rect.left += 3
@@ -97,6 +96,5 @@ while continuer:
     screen.blit(player_surface, player_rect)
     pygame.display.flip() 
     pygame.display.update() 
-    clock.tick(30) 
 
 pygame.quit()
