@@ -2,6 +2,7 @@ import sys
 from math import pi
 from pygame.locals import *
 import pygame
+from perso import *
 #from perso import *
 
 # pygame.display.set_caption("Nom de la fenetre")
@@ -27,21 +28,22 @@ VERT = (0, 255, 0)
 player_surface = pygame.image.load("left1.png").convert_alpha()
 player_rect = player_surface.get_rect(center=(200, 100)) 
 player_y_change = 0 
-player_left = [pygame.image.load("left1.png"),pygame.image.load("left2.png"),pygame.image.load("left3.png"),pygame.image.load("left4.png"),pygame.image.load("left5.png")]
+player_face=0
+
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
 # Vie
 Vie = 4
 text_surface = comic_font.render("Vie: {}".format(Vie), True, BLANC)
 
-move = False
+jump = False
 continuer = True
 deplacement_left = False
 deplacement_right = False
 
 pygame.key.set_repeat(1,20)
 while continuer:
-    clock.tick(20) 
+    clock.tick(30)
     for event in pygame.event.get(): # regler le probleme de deplacement gauche droite
         keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
@@ -51,24 +53,26 @@ while continuer:
         if keys[pygame.K_LEFT]:
             deplacement_left = True
         if keys[pygame.K_UP]:
-            move = True
+            jump = True
+            pygame.time.delay(100)
 
     if deplacement_left:
         player_rect.left -= 3
-        for i in range(len(player_left)):
-            player_surface = player_left[i]
-            if i == len(player_left):
-                i = 0
+        player_face=(player_face+1)%2
+        player_surface=player_left[0+player_face]
         deplacement_left = False
     if deplacement_right:
         player_rect.left += 3
+        print('right')
+        player_face=(player_face+1)%2
+        player_surface=player_right[0+player_face]
         deplacement_right = False
-    if move: # Sauter
+    if jump: # Sauter
      player_y_change = -9
     else:
      player_y_change += GRAVITY
     player_rect.move_ip(0, player_y_change)
-    move = False
+    jump = False
     if player_rect.y < 10: 
      player_rect.y = 10 
      player_y_change = 0 
