@@ -54,7 +54,6 @@ while continuer:
             deplacement_left = True
         if keys[pygame.K_UP]:
             jump = True
-            pygame.time.delay(100)
 
     if deplacement_left:
         player_rect.left -= 3
@@ -63,14 +62,12 @@ while continuer:
         deplacement_left = False
     if deplacement_right:
         player_rect.left += 3
-        print('right')
         player_face=(player_face+1)%2
         player_surface=player_right[0+player_face]
         deplacement_right = False
     if jump: # Sauter
-     player_y_change = -9
-    else:
-     player_y_change += GRAVITY
+        player_y_change = -9
+    player_y_change += GRAVITY
     player_rect.move_ip(0, player_y_change)
     jump = False
     if player_rect.y < 10: 
