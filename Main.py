@@ -22,6 +22,10 @@ BLEU_CIEL = (185, 240, 240)
 ROUGE = (255, 0, 0)
 VERT = (0, 255, 0)
 #fonctions
+def fall(player_rect):
+    player_rect.bottom = screen_height-20 
+    player_y_change = 0
+
 def colision(player_rect,objects):
     for mur in objects:
         old_rect = player_rect_old
@@ -97,10 +101,13 @@ while continuer:
     if player_rect.y < 10: 
      player_rect.y = 10 
      player_y_change = 0 
-    if player_rect.bottom >= screen_height-20: 
-     player_rect.bottom = screen_height-20 
-     player_y_change = 0
-     jump_counter = True
+    
+    if player_rect.bottom >= screen_height-20 and player_rect.left <= 400:
+        fall(player_rect)
+        jump_counter = True
+    if player_rect.bottom >= screen_height-20 and player_rect.right >= 450:
+        fall(player_rect)
+        jump_counter = True
 
     colision(player_rect,[mur for mur in objects if player_rect.colliderect(mur)])
         
@@ -108,7 +115,8 @@ while continuer:
     screen.fill(BLEU_CIEL)
 
     # sol
-    pygame.draw.line(screen, ROUGE,(0, screen_height-20),(screen_width, screen_height-20),5)
+    pygame.draw.line(screen, ROUGE,(0, screen_height-20),(400, screen_height-20),5)
+    pygame.draw.line(screen, ROUGE,(450, screen_height-20),(screen_width, screen_height-20),5)
 
     # arc de cerle pour compteur de vies
     for angle, color in zip((0, pi),(BLANC, VERT)):
