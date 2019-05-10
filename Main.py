@@ -1,7 +1,8 @@
 import sys
 from math import pi
-from pygame.locals import *
 from perso import *
+from pygame.locals import *
+
 
 # pygame.display.set_caption("Nom de la fenetre")
 # logo = pygame.image.load("logo.png").convert()
