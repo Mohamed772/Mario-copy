@@ -22,11 +22,11 @@ BLEU_CIEL = (185, 240, 240)
 ROUGE = (255, 0, 0)
 VERT = (0, 255, 0)
 #fonctions
-def fall(player_rect):
+def nofall(player_rect): # ne tombe pas
     player_rect.bottom = screen_height-20 
     player_y_change = 0
 
-def colision(player_rect,objects):
+def colision(player_rect,objects): # fonction de colision
     for mur in objects:
         old_rect = player_rect_old
         if old_rect.right <= mur.left and player_rect.right > mur.left:
@@ -38,15 +38,15 @@ def colision(player_rect,objects):
 
 # Personnages
 player_surface = pygame.image.load("left1.png").convert_alpha()
-player_rect = player_surface.get_rect(center=(200, 100))
+player_rect = player_surface.get_rect(center=(100, 100))
 player_y_change = 0 
 player_face=0
 
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
 # Vie
-Vie = 4
-text_surface = comic_font.render("Vie: {}".format(Vie), True, BLANC)
+vie = 4
+vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
 
 # murs
 taille_mur = 50
@@ -82,12 +82,12 @@ while continuer:
     
     player_rect_old = player_rect.copy()
 
-    if deplacement_left:
+    if deplacement_left: # gauche
         player_rect.left -= 3
         player_face=(player_face+1)%2
         player_surface=player_left[0+player_face]
     deplacement_left = False
-    if deplacement_right:
+    if deplacement_right: # droite
         player_rect.left += 3
         player_face=(player_face+1)%2
         player_surface=player_right[0+player_face]
@@ -98,16 +98,17 @@ while continuer:
     player_y_change += GRAVITY
     player_rect.move_ip(0, player_y_change)
     jump = False
-    if player_rect.y < 10: 
-     player_rect.y = 10 
-     player_y_change = 0 
     
-    if player_rect.bottom >= screen_height-20 and player_rect.left <= 400:
-        fall(player_rect)
+    if player_rect.bottom >= screen_height-20 and player_rect.left <= 400: #sur le sol
+        nofall(player_rect)
         jump_counter = True
-    if player_rect.bottom >= screen_height-20 and player_rect.right >= 450:
-        fall(player_rect)
+    if player_rect.bottom >= screen_height-20 and player_rect.right >= 450: #sur le sol
+        nofall(player_rect)
         jump_counter = True
+    if player_rect.top >= screen_height+20: #tombe
+        player_rect= player_surface.get_rect(center=(100, 100))
+        vie =- 1
+
 
     colision(player_rect,[mur for mur in objects if player_rect.colliderect(mur)])
         
@@ -122,7 +123,7 @@ while continuer:
     for angle, color in zip((0, pi),(BLANC, VERT)):
         pygame.draw.arc(screen, color, pygame.Rect(600, 30, 80, 80), angle, angle + pi, 5)
     # Texte: VIE
-    screen.blit(text_surface,(610, 60))
+    screen.blit(vie_surface,(610, 60))
    
 
 
