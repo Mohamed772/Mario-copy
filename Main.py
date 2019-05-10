@@ -107,9 +107,8 @@ while continuer:
         jump_counter = True
     if player_rect.top >= screen_height+20: #tombe
         player_rect= player_surface.get_rect(center=(100, 100))
-        vie =- 1
-
-
+        vie -= 1
+        vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
     colision(player_rect,[mur for mur in objects if player_rect.colliderect(mur)])
         
     # Fond provisoire
@@ -124,6 +123,7 @@ while continuer:
         pygame.draw.arc(screen, color, pygame.Rect(600, 30, 80, 80), angle, angle + pi, 5)
     # Texte: VIE
     screen.blit(vie_surface,(610, 60))
+
    
 
 
