@@ -52,7 +52,7 @@ vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
 # murs
 taille_mur = 50
 mur_surf = pygame.Surface((taille_mur,taille_mur))
-mur_surf.fill(BLANC)
+mur_surf.fill(ROUGE)
 mur0_rect = pygame.Rect(300, 330, taille_mur, taille_mur)
 pygame.draw.rect(mur_surf, (255,255,255), mur0_rect)
 mur1_rect = pygame.Rect(200, 330, taille_mur,taille_mur)
@@ -63,17 +63,47 @@ objects = [mur0_rect, mur1_rect,mur2_rect]
 
 jump_counter = True
 jump = False
-continuer = True
+jeu = False
 deplacement_left = False
 deplacement_right = False
+menu = True
 
-pygame.key.set_repeat(1,20)
-while continuer:
+while menu:
     clock.tick(30)
-    for event in pygame.event.get(): # regler le probleme de deplacement gauche droite
+    for event in pygame.event.get(): 
+        if event.type == pygame.QUIT:
+            menu = False
+
+    bouton_width = 200
+    bouton_height = 100
+    bouton_pos_x = 250
+    bouton_po_y = 200
+
+    bouton_surf = pygame.Surface((bouton_width,bouton_height))
+    bouton_surf.fill(BLANC)
+    bouton_rect = pygame.Rect(bouton_pos_x,bouton_po_y,bouton_width,bouton_height)
+    
+    clic_gauche = pygame.mouse.get_pressed()[0]
+    clic_pos_x = pygame.mouse.get_pos()[0]
+    clic_pos_y = pygame.mouse.get_pos()[1]
+
+    if clic_gauche == 1 and bouton_pos_x <= clic_pos_x <= (bouton_pos_x + bouton_width) and bouton_po_y <= clic_pos_y <= (bouton_po_y + bouton_height):
+        jeu = True
+        menu = False
+
+    # Fond provisoire
+    screen.fill(BLEU_CIEL)
+    # affichage 
+    screen.blit(bouton_surf,bouton_rect)
+    pygame.display.flip() 
+    pygame.display.update() 
+pygame.key.set_repeat(1,20)
+while jeu:
+    clock.tick(30)
+    for event in pygame.event.get(): 
         keys = pygame.key.get_pressed()
         if event.type == pygame.QUIT:
-            continuer = False
+            jeu = False
         if keys[pygame.K_RIGHT]:
             deplacement_right = True
         if keys[pygame.K_LEFT]:
