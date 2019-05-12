@@ -2,6 +2,7 @@ import sys
 from math import pi
 from perso import *
 from pygame.locals import *
+import time
 
 
 # pygame.display.set_caption("Nom de la fenetre")
@@ -45,8 +46,10 @@ player_face=0
 
 # Fonts
 comic_font = pygame.font.SysFont("Comi Sans MS", 32)
+comic_font_menu = pygame.font.SysFont("Comi Sans MS", 40)
 # Vie
 vie = 4
+jouer_surface = comic_font_menu.render("JOUER", True, VERT)
 vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
 
 # murs
@@ -78,7 +81,10 @@ while menu:
     bouton_height = 100
     bouton_pos_x = 250
     bouton_po_y = 200
-
+    #image menu
+    menu_surf = pygame.image.load("Titremenu.png").convert_alpha()
+    menu_rect = player_surface.get_rect(center=(170, 50))
+    #bouton jouer
     bouton_surf = pygame.Surface((bouton_width,bouton_height))
     bouton_surf.fill(BLANC)
     bouton_rect = pygame.Rect(bouton_pos_x,bouton_po_y,bouton_width,bouton_height)
@@ -89,14 +95,17 @@ while menu:
 
     if clic_gauche == 1 and bouton_pos_x <= clic_pos_x <= (bouton_pos_x + bouton_width) and bouton_po_y <= clic_pos_y <= (bouton_po_y + bouton_height):
         jeu = True
-        menu = False
 
     # Fond provisoire
     screen.fill(BLEU_CIEL)
+
     # affichage 
+    screen.blit(menu_surf, menu_rect)
     screen.blit(bouton_surf,bouton_rect)
+    screen.blit(jouer_surface,(305, 235))
     pygame.display.flip() 
     pygame.display.update() 
+
 pygame.key.set_repeat(1,20)
 while jeu:
     clock.tick(30)
@@ -140,6 +149,11 @@ while jeu:
         player_rect= player_surface.get_rect(center=(100, 100))
         vie -= 1
         vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
+        if vie == 0:
+            menu = True
+            jeu = False 
+
+
     colision(player_rect,[mur for mur in objects if player_rect.colliderect(mur)])
         
     # Fond provisoire
