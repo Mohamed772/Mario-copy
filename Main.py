@@ -1,8 +1,7 @@
 import sys
 from math import pi
 from perso import *
-from pygame.locals import *
-import time
+import pygame
 
 
 # pygame.display.set_caption("Nom de la fenetre")
@@ -95,6 +94,7 @@ while menu:
 
     if clic_gauche == 1 and bouton_pos_x <= clic_pos_x <= (bouton_pos_x + bouton_width) and bouton_po_y <= clic_pos_y <= (bouton_po_y + bouton_height):
         jeu = True
+        menu = False
 
     # Fond provisoire
     screen.fill(BLEU_CIEL)
