@@ -53,14 +53,14 @@ def ingame():
     vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
 
     # murs
-    taille_mur = 20
+    taille_mur = 50
     mur_surf = pygame.Surface((taille_mur,taille_mur))
     mur_surf.fill(ROUGE)
-    mur0_rect = pygame.Rect(300, 355, taille_mur, taille_mur)
+    mur0_rect = pygame.Rect(300, 330, taille_mur, taille_mur)
     pygame.draw.rect(mur_surf, (255,255,255), mur0_rect)
-    mur1_rect = pygame.Rect(200, 355, taille_mur,taille_mur)
+    mur1_rect = pygame.Rect(200, 330, taille_mur,taille_mur)
     pygame.draw.rect(mur_surf,(255,255,255), mur1_rect)
-    mur2_rect = pygame.Rect(100, 355, taille_mur,taille_mur)
+    mur2_rect = pygame.Rect(100, 330, taille_mur,taille_mur)
     pygame.draw.rect(mur_surf,(255,255,255), mur2_rect)
     objects = [mur0_rect, mur1_rect,mur2_rect]
 
@@ -139,7 +139,7 @@ def ingame():
             deplacement_right = False
         if jump and jump_counter: # Sauter
             jump_counter = False
-            player_y_change = -9
+            player_y_change = -15
         player_y_change += GRAVITY
         player_rect.move_ip(0, player_y_change)
         jump = False
