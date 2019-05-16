@@ -20,7 +20,7 @@ def ingame():
 
     BLANC = (255, 255, 255)
     BLEU_CIEL = (185, 240, 240)
-    ROUGE = (255, 0, 0)
+    NOIR = (0, 0, 0)
     VERT = (0, 255, 0)
     #fonctions
     def nofall(player_rect): # ne tombe pas
@@ -55,7 +55,7 @@ def ingame():
     # murs
     taille_mur = 20
     mur_surf = pygame.Surface((taille_mur,taille_mur))
-    mur_surf.fill(ROUGE)
+    mur_surf.fill(NOIR)
     mur0_rect = pygame.Rect(300, 355, taille_mur, taille_mur)
     pygame.draw.rect(mur_surf, (255,255,255), mur0_rect)
     mur1_rect = pygame.Rect(200, 355, taille_mur,taille_mur)
@@ -165,8 +165,8 @@ def ingame():
         screen.fill(BLEU_CIEL)
 
         # sol
-        pygame.draw.line(screen, ROUGE,(0, screen_height-20),(400, screen_height-20),5)
-        pygame.draw.line(screen, ROUGE,(450, screen_height-20),(screen_width, screen_height-20),5)
+        pygame.draw.line(screen, NOIR,(0, screen_height-20),(400, screen_height-20),5)
+        pygame.draw.line(screen, NOIR,(450, screen_height-20),(screen_width, screen_height-20),5)
 
         # arc de cerle pour compteur de vies
         for angle, color in zip((0, pi),(BLANC, VERT)):
