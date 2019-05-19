@@ -4,9 +4,9 @@ from perso import *
 import pygame
 
 
-# pygame.display.set_caption("Nom de la fenetre")
-# logo = pygame.image.load("logo.png").convert()
-# pygame.display.set_icon(logo)
+pygame.display.set_caption("WrestleMania")
+logo = pygame.image.load("Titremenu.png")
+pygame.display.set_icon(logo)
 
 
 def ingame():
