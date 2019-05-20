@@ -1,12 +1,19 @@
 import sys
 from math import pi
-from perso import *
 import pygame
 
 
 pygame.display.set_caption("WrestleMania")
 logo = pygame.image.load("Titremenu.png")
 pygame.display.set_icon(logo)
+
+player_left1 = pygame.transform.scale(pygame.image.load("left1.png"),(25,25))
+player_left2 = pygame.transform.scale(pygame.image.load("left2.png"),(25,25))
+player_right2= pygame.transform.scale(pygame.image.load("right2.png"),(25,25))
+player_right1 = pygame.transform.scale(pygame.image.load("right1.png"),(25,25))
+player_left = [player_left1,player_left2]
+player_right = [player_right1,player_right2]
+
 
 
 def ingame():
@@ -17,11 +24,16 @@ def ingame():
     screen=pygame.display.set_mode([screen_width,screen_height])
     clock = pygame.time.Clock()
 
+    #music
+    #pygame.mixer.music.load('game_music.mp3')
+    #pygame.mixer.music.play()
+    #pygame.mixer.music.set_volume(0.1)
+
     BLANC = (255, 255, 255)
     BLEU_CIEL = (185, 240, 240)
     NOIR = (0, 0, 0)
     VERT = (0, 255, 0)
-    vie = 1
+    vie = 2
     #fonctions
     def nofall(player_rect): # ne tombe pas
         player_rect.bottom = screen_height-20
@@ -65,8 +77,8 @@ def ingame():
     # pics
     taille_pic = 30
     pic_surf = pygame.image.load("pic.png")
-    pic0_rect = pygame.Rect(350,330,taille_pic,taille_pic)
-    pic1_rect = pygame.Rect(400,330,taille_pic,taille_pic)
+    pic0_rect = pygame.Rect(215,350,taille_pic,taille_pic)
+    pic1_rect = pygame.Rect(550,350,taille_pic,taille_pic)
     objects_mal = [pic0_rect,pic1_rect]
 
     # arrivé
@@ -84,12 +96,12 @@ def ingame():
     deplacement_right = False
     menu = True
     mort = False
-
+    perd_vie = 0
 
 
 
     while menu:
-        clock.tick(30)
+        clock.tick(60)
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 menu = False
@@ -152,7 +164,7 @@ def ingame():
             deplacement_right = False
         if jump and jump_counter: # Sauter
             jump_counter = False
-            player_y_change = -9
+            player_y_change = -12
         player_y_change += GRAVITY
         player_rect.move_ip(0, player_y_change)
         jump = False
@@ -165,8 +177,8 @@ def ingame():
             jump_counter = True
         if player_rect.top >= screen_height+20: #tombe
             player_rect= player_surface.get_rect(center=(100, 100))
-            vie -= 1
-            vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
+            perd_vie = 1
+           
 
 
         if player_rect.colliderect(arrive_rect):
@@ -174,14 +186,20 @@ def ingame():
 
         colision(player_rect,[mur for mur in objects if player_rect.colliderect(mur)])
 
-        for pic in objects_mal:
-            if player_rect.colliderect(pic) == 1:
-                vie -= 1
-                vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
+        for k in objects_mal:
+            if player_rect.colliderect(k) == 1:
+                player_rect= player_surface.get_rect(center=(100, 100))
+                perd_vie = 1
+        
+        if perd_vie >0:
+            vie -= perd_vie
+            perd_vie = 0
+            vie_surface = comic_font.render("Vie: {}".format(vie), True, BLANC)
+
 
         if vie == 0:
-                mort = True
-                jeu = False
+            mort = True
+            jeu = False
         # Fond provisoire
         screen.fill(BLEU_CIEL)
 
