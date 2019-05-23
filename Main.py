@@ -25,9 +25,9 @@ def ingame():
     clock = pygame.time.Clock()
 
     #music
-    #pygame.mixer.music.load('game_music.mp3')
-    #pygame.mixer.music.play()
-    #pygame.mixer.music.set_volume(0.1)
+    pygame.mixer.music.load('game_music.mp3')
+    pygame.mixer.music.play()
+    pygame.mixer.music.set_volume(0.1)
 
     BLANC = (255, 255, 255)
     BLEU_CIEL = (185, 240, 240)
