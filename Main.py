@@ -18,7 +18,7 @@ player_right = [player_right1,player_right2]
 
 def ingame():
     pygame.init()
-    GRAVITY = 0.9
+    GRAVITY = 0.1
     screen_width=700
     screen_height=400
     screen=pygame.display.set_mode([screen_width,screen_height])
